@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "936070190665",
+    "project_id": "e-shop-82b21",
+    "storage_bucket": "e-shop-82b21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936070190665:android:10bab964f90bf2ac73d198",
+        "android_client_info": {
+          "package_name": "com.jatin5120.e_shop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVU6YY-UmED3030ElbKM08iBUj49t3ERk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
