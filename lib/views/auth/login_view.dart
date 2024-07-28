@@ -1,6 +1,7 @@
 import 'package:e_shop/providers/providers.dart';
 import 'package:e_shop/res/res.dart';
 import 'package:e_shop/utils/utils.dart';
+import 'package:e_shop/views/views.dart';
 import 'package:e_shop/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -37,15 +38,7 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Hero(
-                    tag: const ValueKey('password-field'),
-                    child: InputField(
-                      controller: provider.passwordTEC,
-                      label: 'Password',
-                      validator: AppValidators.passwordValidator,
-                      textInputType: TextInputType.visiblePassword,
-                    ),
-                  ),
+                  const PasswordField(),
                 ],
               ),
             ),

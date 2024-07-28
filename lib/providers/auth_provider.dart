@@ -22,6 +22,8 @@ class AuthProvider with ChangeNotifier {
   var nameTEC = TextEditingController();
   var passwordTEC = TextEditingController();
 
+  var showPassword = false;
+
   final loginFormKey = GlobalKey<FormState>();
   final signupFormKey = GlobalKey<FormState>();
 
@@ -33,6 +35,7 @@ class AuthProvider with ChangeNotifier {
     emailTEC.clear();
     nameTEC.clear();
     passwordTEC.clear();
+    showPassword = false;
   }
 
   void goToLogin() {
@@ -45,6 +48,11 @@ class AuthProvider with ChangeNotifier {
     _clearFields();
     signupFormKey.currentState?.reset();
     RouteManagement.goToSignup();
+  }
+
+  void togglePasswordVisibility() {
+    showPassword = !showPassword;
+    notifyListeners();
   }
 
   Future<void> signup() async {

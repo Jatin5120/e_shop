@@ -11,6 +11,7 @@ class InputField extends StatelessWidget {
     this.label,
     this.hint,
     this.textInputAction,
+    this.suffixIcon,
   });
 
   final TextEditingController? controller;
@@ -21,6 +22,7 @@ class InputField extends StatelessWidget {
   final String? label;
   final String? hint;
   final TextInputAction? textInputAction;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) => Material(
@@ -32,6 +34,7 @@ class InputField extends StatelessWidget {
             hintText: hint ?? (label != null ? 'Enter $label' : null),
             counterText: '',
             errorMaxLines: 2,
+            suffixIcon: suffixIcon,
           ),
           validator: validator,
           autovalidateMode: AutovalidateMode.onUserInteraction,
