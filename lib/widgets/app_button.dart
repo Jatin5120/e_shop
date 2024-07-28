@@ -14,9 +14,12 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SizedBox(
         width: double.maxFinite,
-        height: 40,
+        height: 48,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
             backgroundColor: AppColors.primary,
             foregroundColor: AppColors.white,
             textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(

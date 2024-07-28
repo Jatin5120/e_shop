@@ -1,14 +1,17 @@
+import 'package:e_shop/providers/providers.dart';
 import 'package:e_shop/res/res.dart';
 import 'package:e_shop/utils/utils.dart';
 import 'package:e_shop/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<AuthProvider>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: context.theme.scaffoldBackgroundColor,
@@ -19,20 +22,28 @@ class LoginView extends StatelessWidget {
         child: Column(
           children: [
             const Spacer(),
-            const Form(
+            Form(
+              key: provider.loginFormKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Hero(
-                    tag: ValueKey('email-field'),
+                    tag: const ValueKey('email-field'),
                     child: InputField(
+                      controller: provider.emailTEC,
                       label: 'Email',
+                      validator: AppValidators.emailValidator,
+                      textInputType: TextInputType.emailAddress,
                     ),
                   ),
+                  const SizedBox(height: 12),
                   Hero(
-                    tag: ValueKey('password-field'),
+                    tag: const ValueKey('password-field'),
                     child: InputField(
+                      controller: provider.passwordTEC,
                       label: 'Password',
+                      validator: AppValidators.passwordValidator,
+                      textInputType: TextInputType.visiblePassword,
                     ),
                   ),
                 ],
@@ -42,7 +53,7 @@ class LoginView extends StatelessWidget {
             Hero(
               tag: const ValueKey('primary-button'),
               child: AppButton(
-                onTap: () {},
+                onTap: provider.login,
                 label: 'Login',
               ),
             ),
@@ -58,8 +69,9 @@ class LoginView extends StatelessWidget {
                       text: 'Signup',
                       style: const TextStyle(
                         color: AppColors.primary,
+                        fontWeight: FontWeight.w700,
                       ),
-                      recognizer: TapGestureRecognizer()..onTap = RouteManagement.goToSignup,
+                      recognizer: TapGestureRecognizer()..onTap = provider.goToSignup,
                     ),
                   ],
                 ),

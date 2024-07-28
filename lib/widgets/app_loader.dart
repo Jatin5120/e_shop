@@ -15,7 +15,7 @@ class AppLoader extends StatelessWidget {
           elevation: isDialog ? null : 0,
           color: context.theme.cardColor,
           child: Padding(
-            padding: isDialog ? const EdgeInsets.all(16) : const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: CircularProgressIndicator(
               color: context.theme.primaryColor,
               strokeWidth: 3,

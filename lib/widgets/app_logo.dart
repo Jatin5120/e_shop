@@ -14,10 +14,13 @@ class AppLogo extends StatelessWidget {
   final bool _isPrimary;
 
   @override
-  Widget build(BuildContext context) => Text(
-        'e-shop',
-        style: context.textTheme.titleLarge?.copyWith(
-          color: _isPrimary ? AppColors.primary : AppColors.white,
+  Widget build(BuildContext context) => Hero(
+        tag: const ValueKey('app-logo'),
+        child: Text(
+          'e-shop',
+          style: context.textTheme.titleLarge?.copyWith(
+            color: _isPrimary ? AppColors.primary : AppColors.white,
+          ),
         ),
       );
 }

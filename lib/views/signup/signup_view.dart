@@ -1,14 +1,17 @@
+import 'package:e_shop/providers/providers.dart';
 import 'package:e_shop/res/res.dart';
 import 'package:e_shop/utils/utils.dart';
 import 'package:e_shop/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignupView extends StatelessWidget {
   const SignupView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<AuthProvider>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: context.theme.scaffoldBackgroundColor,
@@ -19,23 +22,35 @@ class SignupView extends StatelessWidget {
         child: Column(
           children: [
             const Spacer(),
-            const Form(
+            Form(
+              key: provider.signupFormKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   InputField(
+                    controller: provider.nameTEC,
                     label: 'Name',
+                    validator: AppValidators.userName,
+                    textInputType: TextInputType.name,
                   ),
+                  const SizedBox(height: 12),
                   Hero(
-                    tag: ValueKey('email-field'),
+                    tag: const ValueKey('email-field'),
                     child: InputField(
+                      controller: provider.emailTEC,
                       label: 'Email',
+                      validator: AppValidators.emailValidator,
+                      textInputType: TextInputType.emailAddress,
                     ),
                   ),
+                  const SizedBox(height: 12),
                   Hero(
-                    tag: ValueKey('password-field'),
+                    tag: const ValueKey('password-field'),
                     child: InputField(
+                      controller: provider.passwordTEC,
                       label: 'Password',
+                      validator: AppValidators.passwordValidator,
+                      textInputType: TextInputType.visiblePassword,
                     ),
                   ),
                 ],
@@ -45,7 +60,7 @@ class SignupView extends StatelessWidget {
             Hero(
               tag: const ValueKey('primary-button'),
               child: AppButton(
-                onTap: () {},
+                onTap: provider.signup,
                 label: 'Signup',
               ),
             ),
@@ -61,8 +76,9 @@ class SignupView extends StatelessWidget {
                       text: 'Login',
                       style: const TextStyle(
                         color: AppColors.primary,
+                        fontWeight: FontWeight.w700,
                       ),
-                      recognizer: TapGestureRecognizer()..onTap = RouteManagement.goToLogin,
+                      recognizer: TapGestureRecognizer()..onTap = provider.goToLogin,
                     ),
                   ],
                 ),

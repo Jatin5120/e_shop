@@ -1,6 +1,9 @@
 import 'package:e_shop/main.dart';
+import 'package:e_shop/models/models.dart';
+import 'package:e_shop/utils/utils.dart';
 import 'package:e_shop/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Utility {
   const Utility._();
@@ -15,7 +18,6 @@ class Utility {
     });
   }
 
-  /// Show loader
   static void showLoader() {
     showDialog(
       context: kNavigatorKey.currentContext!,
@@ -24,8 +26,46 @@ class Utility {
     );
   }
 
-  /// Close any open dialog.
   static void closeLoader() {
-    kNavigatorKey.currentContext!;
+    kNavigatorKey.currentContext!.pop();
+  }
+
+  static Future<void> showInfoDialog(DialogModel dialog) async {
+    await showDialog(
+      context: kNavigatorKey.currentContext!,
+      builder: (_) => Dialog(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(16),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (dialog.title != null)
+                Text(
+                  dialog.title!,
+                  style: kNavigatorKey.currentContext!.textTheme.titleLarge,
+                ),
+              const SizedBox(height: 16),
+              Text(
+                dialog.data,
+                style: kNavigatorKey.currentContext!.textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              const AppButton(
+                label: 'Okay',
+                onTap: closeLoader,
+              ),
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+    );
   }
 }
