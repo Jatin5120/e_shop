@@ -1,3 +1,4 @@
+import 'package:e_shop/di/di.dart';
 import 'package:e_shop/models/models.dart';
 import 'package:e_shop/services/services.dart';
 import 'package:e_shop/utils/utils.dart';
@@ -12,6 +13,8 @@ class DashboardProvider with ChangeNotifier {
   var isLoading = true;
 
   var products = <ProductModel>[];
+
+  bool get showDiscountPrice => kGetIt<ConfigService>().showDiscountPrice;
 
   void getProducts() async {
     try {

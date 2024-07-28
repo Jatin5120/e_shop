@@ -14,6 +14,7 @@ import 'package:e_shop/providers/dashboard_provider.dart' as _i507;
 import 'package:e_shop/repositories/dashboard_repository.dart' as _i57;
 import 'package:e_shop/repositories/repositories.dart' as _i865;
 import 'package:e_shop/services/auth_service.dart' as _i1031;
+import 'package:e_shop/services/config_service.dart' as _i149;
 import 'package:e_shop/services/dashboard_service.dart' as _i527;
 import 'package:e_shop/services/services.dart' as _i530;
 import 'package:get_it/get_it.dart' as _i174;
@@ -34,6 +35,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i57.DashboardRepository());
     gh.lazySingleton<_i165.DbClient>(() => _i165.DbClient());
     gh.lazySingleton<_i1031.AuthService>(() => _i1031.AuthService());
+    gh.lazySingleton<_i149.ConfigService>(() => _i149.ConfigService());
     gh.lazySingleton<_i527.DashboardService>(
         () => _i527.DashboardService(gh<_i865.DashboardRepository>()));
     gh.lazySingleton<_i10.AuthProvider>(

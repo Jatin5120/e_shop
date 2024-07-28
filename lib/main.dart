@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:e_shop/data/data.dart';
 import 'package:e_shop/di/di.dart';
 import 'package:e_shop/firebase_options.dart';
 import 'package:e_shop/providers/providers.dart';
 import 'package:e_shop/res/res.dart';
+import 'package:e_shop/services/services.dart';
 import 'package:e_shop/utils/utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,7 @@ void main() async {
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
     kGetIt<DbClient>().initialize(),
   ]);
+  unawaited(kGetIt<ConfigService>().setDefaults());
 
   runApp(
     MultiProvider(
