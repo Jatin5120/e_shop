@@ -8,7 +8,7 @@ class AppRouter {
   AppRouter._();
 
   static GoRouter router = GoRouter(
-    initialLocation: AppRoutes.login,
+    initialLocation: AppRoutes.splash,
     navigatorKey: kNavigatorKey,
     routes: [
       GoRoute(

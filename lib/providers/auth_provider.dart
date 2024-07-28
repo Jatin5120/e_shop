@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:e_shop/data/data.dart';
+import 'package:e_shop/di/di.dart';
 import 'package:e_shop/models/models.dart';
 import 'package:e_shop/services/services.dart';
 import 'package:e_shop/utils/utils.dart';
@@ -7,8 +11,8 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class AuthProvider with ChangeNotifier {
-  AuthProvider(this._authService);
-  final AuthService _authService;
+  AuthProvider(this._service);
+  final AuthService _service;
 
   User? _user;
 
@@ -25,18 +29,20 @@ class AuthProvider with ChangeNotifier {
 
   bool get _isSignupValidated => signupFormKey.currentState?.validate() ?? false;
 
-  void goToLogin() {
+  void _clearFields() {
     emailTEC.clear();
     nameTEC.clear();
     passwordTEC.clear();
+  }
+
+  void goToLogin() {
+    _clearFields();
     loginFormKey.currentState?.reset();
     RouteManagement.goToLogin();
   }
 
   void goToSignup() {
-    emailTEC.clear();
-    nameTEC.clear();
-    passwordTEC.clear();
+    _clearFields();
     signupFormKey.currentState?.reset();
     RouteManagement.goToSignup();
   }
@@ -47,14 +53,16 @@ class AuthProvider with ChangeNotifier {
         return;
       }
       Utility.showLoader();
-      await _authService.signup(
+      await _service.signup(
         nameTEC.text.trim(),
         emailTEC.text.trim(),
         passwordTEC.text.trim(),
       );
       Utility.closeLoader();
-      _user = _authService.getCurrentUser();
+      _user = _service.getCurrentUser();
       if (_user != null) {
+        _clearFields();
+        unawaited(kGetIt<DbClient>().save(LocalKeys.isLoggedIn, true));
         RouteManagement.goToDashboard();
       }
       notifyListeners();
@@ -70,13 +78,15 @@ class AuthProvider with ChangeNotifier {
         return;
       }
       Utility.showLoader();
-      await _authService.login(
+      await _service.login(
         emailTEC.text.trim(),
         passwordTEC.text.trim(),
       );
       Utility.closeLoader();
-      _user = _authService.getCurrentUser();
+      _user = _service.getCurrentUser();
       if (_user != null) {
+        unawaited(kGetIt<DbClient>().save(LocalKeys.isLoggedIn, true));
+        _clearFields();
         RouteManagement.goToDashboard();
       }
       notifyListeners();
@@ -89,8 +99,10 @@ class AuthProvider with ChangeNotifier {
   Future<void> logOut() async {
     try {
       Utility.showLoader();
-      await _authService.logOut();
+      await _service.logOut();
+      unawaited(kGetIt<DbClient>().save(LocalKeys.isLoggedIn, false));
       Utility.closeLoader();
+      RouteManagement.goToLogin();
       _user = null;
       notifyListeners();
     } on AppExceptions catch (e) {
@@ -100,7 +112,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   void checkCurrentUser() {
-    _user = _authService.getCurrentUser();
+    _user = _service.getCurrentUser();
     notifyListeners();
   }
 }

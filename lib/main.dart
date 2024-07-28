@@ -1,3 +1,4 @@
+import 'package:e_shop/data/data.dart';
 import 'package:e_shop/di/di.dart';
 import 'package:e_shop/firebase_options.dart';
 import 'package:e_shop/providers/providers.dart';
@@ -7,14 +8,21 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   configureInjection();
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await Future.wait([
+    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+    kGetIt<DbClient>().initialize(),
+  ]);
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => kGetIt<AuthProvider>()),
+        ChangeNotifierProvider(create: (context) => kGetIt<DashboardProvider>()),
       ],
       child: const MyApp(),
     ),
